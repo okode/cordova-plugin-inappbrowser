@@ -84,6 +84,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+import android.webkit.SslErrorHandler;
+import android.net.http.SslError;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class InAppBrowser extends CordovaPlugin {
@@ -1452,6 +1454,13 @@ public class InAppBrowser extends CordovaPlugin {
             } catch (JSONException ex) {
                 LOG.d(LOG_TAG, "Should never happen");
             }
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view,
+                SslErrorHandler handler, SslError error) {
+            LOG.e("Error", "Received SSL error"+ error.toString());
+            handler.proceed();
         }
 
         /**
